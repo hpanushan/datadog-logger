@@ -1,0 +1,17 @@
+version: '3'
+services:
+  datadog-agent:
+    image: gcr.io/datadoghq/agent:latest
+    environment:
+     - DD_API_KEY=************************
+     - DD_SITE=datadoghq.com
+     - DD_LOGS_ENABLED=true
+     - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+     - DD_CONTAINER_EXCLUDE=name:datadog-agent
+     - DD_ENV=prod
+    volumes:
+     - /var/run/docker.sock:/var/run/docker.sock
+     - /proc/:/host/proc/:ro
+     - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
+  log-gen:  # this name will be assigned to both Datadog service and source names
+    image: log-gen:0.1
